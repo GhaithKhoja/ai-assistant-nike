@@ -1,6 +1,7 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from db.database import create_products_table, insert_product
+from image_processing import run_image_processing
 import requests
 import time
 import re
@@ -82,8 +83,6 @@ def parse_product_card(product_card):
     link = product_card.find('a', class_='product-card__link-overlay')
     name = link.text.strip()
     url = link['href']
-    
-    # TODO: PARSE MAYBE THE SHOE TYPE AND SIZES
     
     # Extract messaging if exists
     # Messaging can be something like "Just coming in" or "On Sale"
@@ -216,6 +215,9 @@ def main():
     
     # Parse and save products
     scrape_main_page(base_url=base_url)
+    
+    # Run image processing to filter the shoes into types
+    run_image_processing()
 
 if __name__ == '__main__':
     main()

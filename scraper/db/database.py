@@ -257,3 +257,32 @@ def search_new_releases(
         products_list.append(product_dict)
 
     return json.dumps({"products": products_list}, indent=2)
+
+def get_product_details():
+    """
+    Retrieves product IDs, names, and image URLs from the products table.
+    
+    This is used for the image processing step.
+    
+    Returns:
+    - list of tuples: Each tuple contains (id, name, image_src)
+    """
+    with get_connection() as conn:
+        cur = conn.cursor()
+        cur.execute('SELECT id, name, image_src FROM products')
+        rows = cur.fetchall()
+    return rows
+
+def insert_product_type(product_id, product_type):
+    """
+    Inserts a type into the products table based on the product ID.
+    
+    Args:
+    - product_id (str): ID of the product.
+    - product_type (str): Type of the product (e.g., 'low', 'mid', 'high').
+    """
+    with get_connection() as conn:
+        cur = conn.cursor()
+        cur.execute('UPDATE products SET type = ? WHERE id = ?', (product_type, product_id))
+        conn.commit()
+
