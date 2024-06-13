@@ -38,8 +38,11 @@ initial_fetch.db: Initial version of the database for restoring purposes.
 
 
 ## Setup
+To run this project, we need to configure the environment variables for this project. Make a copy of `example.env` and rename it to `.env`. Open up the newly created `.env` file and follow the instructions inside to add your API key.
+https://www.loom.com/share/45dd049cad8a456e857d863fc81f0bc2
 
-To run this project, you need to install `conda` for managing the environment and package dependencies. Follow these steps to set up the environment:
+Afterwards, you need to install `conda` for managing the environment and package dependencies. Follow these steps to set up the environment:
+https://www.loom.com/share/2d70e6b3229343b991c9955b0cea6b30?sid=5b1a7845-aee8-4629-be9a-c65e31222e5e
 
 #### Step 1: Install Conda
 
@@ -58,7 +61,6 @@ This command will create a new `conda` environment named `myenv` and install the
 #### Step 3: Activate the Conda Environment and Install Additional Dependencies
 
 #### Setup video
-https://www.loom.com/share/2d70e6b3229343b991c9955b0cea6b30?sid=5b1a7845-aee8-4629-be9a-c65e31222e5e
 
 1. Activate the newly created conda environment:
 
@@ -73,8 +75,6 @@ https://www.loom.com/share/2d70e6b3229343b991c9955b0cea6b30?sid=5b1a7845-aee8-46
     ```
 
 Following these steps ensures that your environment is set up correctly with all the required dependencies.
-
-Next, we need to configure the environment variables for this project. Make a copy of `example.env` and rename it to `.env`. Open up the newly created `.env` file and follow the instructions inside to add your API key.
 
 Note: This project requires macOS for audio playback if you are using the `--audio` flag in the `main.py` script. The audio playback is done using the `afplay` subprocess, which is only available on macOS.
 
