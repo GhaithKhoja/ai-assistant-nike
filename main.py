@@ -1,8 +1,16 @@
-from assistant.assistant import Assistant
+import argparse
+from assistant import Assistant
 
 def main():
-    # Init the assistant
-    assistant = Assistant()
+    # Parse if audio is passed
+    parser = argparse.ArgumentParser(description="Command-line interface for Nike Air Jordan Product Assistant.")
+    parser.add_argument("--audio", action="store_true", help="Enable voice interaction")
+    args = parser.parse_args()
+
+    if args.audio:
+        assistant = Assistant(voice=True)
+    else:
+        assistant = Assistant()
     
     # Print welcome message
     print("\n")
@@ -19,7 +27,7 @@ def main():
     # Take user input
     while True:
         user_input = input("user: ")
-        assistant.stream_response(user_input )  # Stream AI response
+        assistant.stream_response(user_input)  # Stream AI response
         
         # Allow user to input another question after the assistant's response
         print("\n")  # Print newline for readability

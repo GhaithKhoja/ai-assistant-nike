@@ -3,3 +3,6 @@ __pycache__
 
 # Do not push env files
 .env
+
+# Do not push generated audio files
+*.mp3
