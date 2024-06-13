@@ -124,7 +124,7 @@ def search_products(
         params.append(f"%{name.lower()}%")
 
     if max_price is not None:
-        query += " AND CAST(price AS FLOAT) <= ?"
+        query += " AND CAST(SUBSTR(price, 2) AS FLOAT) <= ?"
         params.append(max_price)
 
     if colors:
@@ -192,7 +192,7 @@ def search_products_with_discounts(
         params.append(f"%{name.lower()}%")
 
     if max_price is not None:
-        query += " AND CAST(price AS FLOAT) <= ?"
+        query += " AND CAST(SUBSTR(price, 2) AS FLOAT) <= ?"
         params.append(max_price)
 
     if colors:
@@ -260,7 +260,7 @@ def search_new_releases(
         params.append(f"%{name.lower()}%")
 
     if max_price is not None:
-        query += " AND CAST(price AS FLOAT) <= ?"
+        query += " AND CAST(SUBSTR(price, 2) AS FLOAT) <= ?"
         params.append(max_price)
 
     if colors:

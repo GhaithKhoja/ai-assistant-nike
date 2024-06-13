@@ -1,7 +1,7 @@
 # ai-assistant-nike
 ## Demo Video
 ### Nike AI Assistant Demo
-recording...
+https://www.loom.com/share/b822662962be434eb80a8e8b9412274f?sid=b5bdea8f-20a0-44e9-a72a-6afec3498f39
 ### Scraper Demo
 https://www.loom.com/share/4fe069ad58a94005bc444e82cb9167f5
 ## File Structure
