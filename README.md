@@ -4,6 +4,7 @@
 ```
 ├── README.md
 ├── requirements.txt
+├── example.env
 ├── assistant.py
 ├── main.py
 └── scraper
