@@ -37,7 +37,37 @@ initial_fetch.db: Initial version of the database for restoring purposes.
 
 ## Setup
 
-To run this project, we first need to create a Python virtual environment. I used conda for this project, but you can use any virtual environment manager of your choice. Once you have a virtual environment set up, you can install the required dependencies by running `pip install -r requirements.txt` in your virtual environment.
+To run this project, you need to install `conda` for managing the environment and package dependencies. Follow these steps to set up the environment:
+
+#### Step 1: Install Conda
+
+If you don't already have `conda` installed, follow the instructions on the [official Miniconda page](https://docs.conda.io/en/latest/miniconda.html) to install Miniconda.
+
+#### Step 2: Create the Conda Environment
+
+Create an environment using the provided `environment.yml` file:
+
+```sh
+conda env create -f environment.yml
+```
+
+This command will create a new `conda` environment named `myenv` and install the necessary packages specified in `environment.yml`.
+
+#### Step 3: Activate the Conda Environment and Install Additional Dependencies
+
+1. Activate the newly created conda environment:
+
+    ```sh
+    conda activate myenv
+    ```
+
+2. Install the additional dependencies using `pip`:
+
+    ```sh
+    pip install -r requirements.txt
+    ```
+
+Following these steps ensures that your environment is set up correctly with all the required dependencies.
 
 Next, we need to configure the environment variables for this project. Make a copy of `example.env` and rename it to `.env`. Open up the newly created `.env` file and follow the instructions inside to add your API key.
 

@@ -1,0 +1,35 @@
+name: nike-ai-assistant-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.3
+  - beautifulsoup4>=4.12.3
+  - brotli-python>=1.0.9
+  - bzip2>=1.0.8
+  - ca-certificates>=2024.3.11
+  - certifi>=2024.6.2
+  - charset-normalizer>=2.0.4
+  - distro>=1.9.0
+  - expat>=2.6.2
+  - h11>=0.14.0
+  - idna>=3.7
+  - libcxx>=14.0.6
+  - libffi>=3.4.4
+  - ncurses>=6.4
+  - openssl>=3.0.13
+  - pip>=24.0
+  - pysocks>=1.7.1
+  - readline>=8.2
+  - requests>=2.32.2
+  - setuptools>=69.5.1
+  - sortedcontainers>=2.4.0
+  - soupsieve>=2.5
+  - sqlite>=3.45.3
+  - tk>=8.6.14
+  - tqdm>=4.66.4
+  - typing-extensions>=4.12.2
+  - tzdata>=2024a
+  - urllib3>=2.2.1
+  - wheel>=0.43.0
+  - xz>=5.4.6
+  - zlib>=1.2.13
