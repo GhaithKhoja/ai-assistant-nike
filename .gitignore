@@ -1,1 +1,5 @@
+# Do not push cache
 __pycache__
+
+# Do not push env files
+.env
