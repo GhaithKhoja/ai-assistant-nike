@@ -94,7 +94,8 @@ def search_products(
         name: Optional[str] = None, 
         max_price: Optional[float] = None, 
         colors: Optional[List[str]] = None, 
-        description: Optional[str] = None
+        description: Optional[str] = None,
+        limit: int = 20
     ) -> List[Tuple]:
     """
     Searches for products in the database based on the given criteria.
@@ -104,6 +105,7 @@ def search_products(
     - max_price (float, optional): Maximum price of the product.
     - colors (list of str, optional): List of colors to search for.
     - description (str, optional): Description text to search for.
+    - limit (int, optional): Limit of how many results we should return.
 
     Returns:
     - list of tuples: A list of tuples representing the products that match the search criteria.
@@ -126,6 +128,10 @@ def search_products(
     if description:
         query += " AND description LIKE ?"
         params.append(f"%{description.lower()}%")
+    
+    # Add some randomness to the fetched results and add a limit
+    query += " ORDER BY RANDOM() LIMIT ?"
+    params.append(limit)
 
     with get_connection() as conn:
         cur = conn.cursor()
@@ -150,7 +156,8 @@ def search_products_with_discounts(
         name: Optional[str] = None,
         max_price: Optional[float] = None,
         colors: Optional[List[str]] = None,
-        description: Optional[str] = None
+        description: Optional[str] = None,
+        limit: int = 20
     ) -> str:
     """
     Searches for products in the database that have discounts, optionally filtering by additional criteria.
@@ -160,6 +167,7 @@ def search_products_with_discounts(
     - max_price (float, optional): Maximum price of the product.
     - colors (list of str, optional): List of colors to search for.
     - description (str, optional): Description text to search for.
+    - limit (int, optional): Limit of how many results we should return.
 
     Returns:
     - str: JSON string representing the products with discounts matching the criteria.
@@ -182,6 +190,10 @@ def search_products_with_discounts(
     if description:
         query += " AND description LIKE ?"
         params.append(f"%{description.lower()}%")
+        
+    # Add some randomness to the fetched results and add a limit
+    query += " ORDER BY RANDOM() LIMIT ?"
+    params.append(limit)
 
     with get_connection() as conn:
         cur = conn.cursor()
@@ -206,7 +218,8 @@ def search_new_releases(
         name: Optional[str] = None,
         max_price: Optional[float] = None,
         colors: Optional[List[str]] = None,
-        description: Optional[str] = None
+        description: Optional[str] = None,
+        limit: int = 20  
     ) -> str:
     """
     Searches for new releases in the database based on the given criteria.
@@ -216,6 +229,7 @@ def search_new_releases(
     - max_price (float, optional): Maximum price of the product.
     - colors (list of str, optional): List of colors to search for.
     - description (str, optional): Description text to search for.
+    - limit (int, optional): Limit of how many results we should return.
 
     Returns:
     - str: JSON string representing the upcoming new releases matching the criteria.
@@ -238,6 +252,10 @@ def search_new_releases(
     if description:
         query += " AND description LIKE ?"
         params.append(f"%{description.lower()}%")
+        
+    # Add some randomness to the fetched results and add a limit
+    query += " ORDER BY RANDOM() LIMIT ?"
+    params.append(limit)
 
     with get_connection() as conn:
         cur = conn.cursor()

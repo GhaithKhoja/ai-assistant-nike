@@ -1,6 +1,9 @@
 import os
 import json
 import subprocess
+import itertools
+import sys
+import time
 from dotenv import load_dotenv
 from openai import OpenAI
 from collections import defaultdict
@@ -23,6 +26,13 @@ class Assistant:
         # Array that will hold the history of messages
         self.messages = []
         
+        # Set the model that we will use
+        self.model = 'gpt-3.5-turbo' # Switch this out for gpt-4o for better performance
+        
+        # Limit of how many responses from the DB we pass to the assistant
+        # Feel free to increase or decrease to see the difference
+        self.limit = 20
+        
         # Set if we should stream back by voice or text
         self.voice = voice
         
@@ -31,6 +41,10 @@ class Assistant:
         You are an AI assistant specialized in Nike Air Jordan products. Your goal is to provide helpful and accurate information to users about Air Jordans. Here's how you should act:
         Your role is to assist users in navigating the world of Nike Air Jordan products with ease and confidence. Stay knowledgeable, responsive, and friendly in all interactions.
         """
+        
+        # Add a command to make answers concise if voice flag is set
+        if self.voice:
+            system_prompt += ' Please provide concise and brief responses suitable for audio playback.'
 
         # Add the system prompt to the messages
         self.messages.append({"role": "system", "content": system_prompt})
@@ -236,9 +250,14 @@ class Assistant:
         # Add user message
         self.add_user_message(message)
         
+        # Iterate over the messages as they are streamed
+        print("\n")
+        print("Air Jordans AI Assistant: ")
+        print("building response...", end='', flush=True)
+        
         # Get the initital response
         response = self.client.chat.completions.create(
-            model="gpt-4o", # Use GPT-4o
+            model=self.model, 
             messages=self.messages,
             tools=self.get_tools(first_call=True), # Pass the tools the AI can use
             tool_choice="required", # Force a function call for the first use
@@ -279,7 +298,8 @@ class Assistant:
                         name=name,
                         max_price=max_price,
                         colors=colors,
-                        description=description
+                        description=description,
+                        limit=self.limit
                     )
                 elif function_name == "search_products_with_discounts":
                     # Parse name if it exists
@@ -298,7 +318,8 @@ class Assistant:
                         name=name,
                         max_price=max_price,
                         colors=colors,
-                        description=description
+                        description=description,
+                        limit=self.limit
                     )
                 elif function_name == "search_new_releases":
                     # Parse name if it exists
@@ -317,21 +338,22 @@ class Assistant:
                         name=name,
                         max_price=max_price,
                         colors=colors,
-                        description=description
+                        description=description,
+                        limit=self.limit
                     )
                     
                 # Append the result to the messages history
-                self.add_tool_result(id=tool_call.id, function_name=function_name, result=results)          
-        
-        
-        # Iterate over the messages as they are streamed
-        print("\n")
-        print("Air Jordans AI Assistant: ")
+                self.add_tool_result(id=tool_call.id, function_name=function_name, result=results) 
+                
+        # Notify the user that the AI finishing building up the response
+        sys.stdout.write('\r')  # Move the cursor back to the start of the line
+        sys.stdout.write(' ' * len("Building response..."))  # Overwrite the previous message with spaces
+        sys.stdout.write('\r')  # Move the cursor back to the start of the line again         
         
         if not self.voice:
             # Start the streaming completion
             stream = self.client.chat.completions.create(
-                model="gpt-4o", # Use GPT-4-o
+                model=self.model, 
                 stream=True,  # Set stream to True to receive messages in chunks
                 messages=self.messages,
             )
@@ -342,53 +364,63 @@ class Assistant:
         else:
             # Get the response
             text_response = self.client.chat.completions.create(
-                model="gpt-4o", # Use GPT-4-o
+                model=self.model,
                 messages=self.messages,
             )
             
             # Extract content from response
-        content = text_response.choices[0].message.content
+            content = text_response.choices[0].message.content
 
-        # Define maximum length for each section (512 characters)
-        max_length = 512
+            # Define maximum length for each section (4096 characters)
+            max_length = 4096
 
-        # Split content into sections without cutting words
-        sections = []
-        current_section = ""
-        for word in content.split():
-            if len(current_section) + len(word) + 1 <= max_length:
-                if current_section:
-                    current_section += " "
-                current_section += word
-            else:
+            # Split content into sections without cutting words
+            sections = []
+            current_section = ""
+            for word in content.split():
+                if len(current_section) + len(word) + 1 <= max_length:
+                    if current_section:
+                        current_section += " "
+                    current_section += word
+                else:
+                    sections.append(current_section)
+                    current_section = word
+            
+            # Append last section if any
+            if current_section:
                 sections.append(current_section)
-                current_section = word
-        
-        # Append last section if any
-        if current_section:
-            sections.append(current_section)
+                
+            # Define the states for the dots - This is used for the Generating response text
+            message = "Generating audio response..."
+            # Print the message with moving dots
+            sys.stdout.write(f"\r{message}")
+            sys.stdout.flush()
 
-        # Iterate over sections
-        for section in sections:
-            # Generate speech for the current section
-            response = self.client.audio.speech.create(
-                model="tts-1",
-                voice="nova",  # Adjust voice as needed
-                input=section,
-            )
-            print(section)
-        
-            # Save the response to a local file
-            output_file = "voice_response.mp3"
-            response.stream_to_file(output_file)
+            # Iterate over sections
+            for section in sections:
+                # Generate speech for the current section
+                response = self.client.audio.speech.create(
+                    model="tts-1",
+                    voice="nova",  # Adjust voice as needed
+                    input=section,
+                )
+                
+                # Replace the message with the audio response that will be played
+                sys.stdout.write("\r" + " " * (len(message) + 3) + "\r")  # Clear the line
+                sys.stdout.write(f"{section}\n")
+                sys.stdout.flush()
+            
+                # Save the response to a local file
+                output_file = "voice_response.mp3"
+                response.stream_to_file(output_file)
 
-            # Play the saved MP3 file using macOS afplay command
-            try:
-                subprocess.run(["afplay", output_file])
-            except FileNotFoundError:
-                print("Error: 'afplay' command not found. Make sure you are using macOS.")
-            except Exception as e:
-                print(f"Error occurred during playing: {e}")
+                # Play the saved MP3 file using macOS afplay command
+                try:
+                    subprocess.run(["afplay", output_file])
+                except FileNotFoundError:
+                    print("Error: 'afplay' command not found. Make sure you are using macOS.")
+                except Exception as e:
+                    print(f"Error occurred during playing: {e}")
                 
     
 
