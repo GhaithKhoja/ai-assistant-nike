@@ -4,6 +4,7 @@
 ```
 ├── README.md
 ├── requirements.txt
+├── environment.yml
 ├── example.env
 ├── assistant.py
 ├── main.py
@@ -20,6 +21,7 @@
 ### Files:
 - README.md: Project overview and documentation.
 - requirements.txt: List of Python dependencies for the project.
+- environment.yml: Used to create the Conda environment for the project.
 - example.env: Example environment variable file for configuration.
 - assistant.py: Main code for the Nike Air Jordan AI assistant.
 - main.py: Driver script to run the AI assistant. Supports `--audio` flag for generating and playing audio responses on macOS.
