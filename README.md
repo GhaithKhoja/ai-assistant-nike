@@ -106,3 +106,8 @@ In this project, I opted to use SQLite3 as the database system instead of hostin
 If you're curious to inspect the data, you can simply load the `.db` files into an online viewer such as [SQLite Viewer](https://sqliteviewer.app/) or use the SQLite Viewer extension available in Visual Studio Code. This will allow you to browse the contents of the database files (`database.db`, `backup/database.db`, `backup/initial_fetch.db`) and see the structure and data tables with ease.
 
 This approach ensures that working with the database is as straightforward as possible for developers, contributors, and end-users.
+
+## Possible Future Imporvements
+1. Fine-tuning the prompt
+2. Add more information such as available sizes
+3. More function calling tools to make the AI more aware of air jordans
