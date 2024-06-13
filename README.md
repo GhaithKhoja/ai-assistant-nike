@@ -1,5 +1,9 @@
 # ai-assistant-nike
-
+## Demo Video
+### Nike AI Assistant Demo
+https://www.loom.com/share/055cbe8008ab431189a9b38d4c51d018
+### Scraper Demo
+https://www.loom.com/share/4fe069ad58a94005bc444e82cb9167f5
 ## File Structure
 ```
 ├── README.md
@@ -102,5 +106,3 @@ In this project, I opted to use SQLite3 as the database system instead of hostin
 If you're curious to inspect the data, you can simply load the `.db` files into an online viewer such as [SQLite Viewer](https://sqliteviewer.app/) or use the SQLite Viewer extension available in Visual Studio Code. This will allow you to browse the contents of the database files (`database.db`, `backup/database.db`, `backup/initial_fetch.db`) and see the structure and data tables with ease.
 
 This approach ensures that working with the database is as straightforward as possible for developers, contributors, and end-users.
-
-## Demo Video

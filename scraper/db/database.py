@@ -71,6 +71,9 @@ def insert_product(id, name, promotion_status, price, colors, url, image_src, de
         current_price = float(price_parts[0])
         discount = None
     
+    # Print that we are inserting the product
+    print(f"Inserting product with ID: {id} - Name: {name} - Colors: {colors}")
+    
     # Get connection to the DB and insert the information
     with get_connection() as conn:
         cur = conn.cursor()
