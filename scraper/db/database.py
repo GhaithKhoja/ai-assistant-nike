@@ -12,6 +12,7 @@ def get_connection():
     current_dir = os.path.dirname(os.path.realpath(__file__))
     
     # Construct the path to the database file
+    # Rename database.db to something else if you would like rescrape with new DB
     db_path = os.path.join(current_dir, 'database.db')
     
     # Connect to the SQLite database
