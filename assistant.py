@@ -40,8 +40,9 @@ class Assistant:
         system_prompt = """
         You are an AI assistant specialized in Nike Air Jordan products. Your goal is to provide helpful and accurate information to users about Air Jordans. Here's how you should act:
         Your role is to assist users in navigating the world of Nike Air Jordan products with ease and confidence. Stay knowledgeable, responsive, and friendly in all interactions.
+        Focus on providing the specific results the user requests and avoid mentioning any results outside their criteria. For example, if the user asks for shoes with a maximum budget of $100, do not include shoes priced above $100. Similarly, if the user asks for shoes with the color red, do not include shoes that do not have the color red.
         """
-        
+
         # Add a command to make answers concise if voice flag is set
         if self.voice:
             system_prompt += ' Please provide concise and brief responses suitable for audio playback.'
