@@ -95,6 +95,7 @@ def search_products(
         max_price: Optional[float] = None, 
         colors: Optional[List[str]] = None, 
         description: Optional[str] = None,
+        category: Optional[str] = None,
         limit: int = 20
     ) -> List[Tuple]:
     """
@@ -105,6 +106,7 @@ def search_products(
     - max_price (float, optional): Maximum price of the product.
     - colors (list of str, optional): List of colors to search for.
     - description (str, optional): Description text to search for.
+    - category (str, optional): Category of the product (low, mid, high, basketball, slides).
     - limit (int, optional): Limit of how many results we should return.
 
     Returns:
@@ -128,6 +130,10 @@ def search_products(
     if description:
         query += " AND description LIKE ?"
         params.append(f"%{description.lower()}%")
+        
+    if category and category in ["low", "mid", "high", "basketball", "slides"]:
+        query += " AND type = ?"
+        params.append(category)
     
     # Add some randomness to the fetched results and add a limit
     query += " ORDER BY RANDOM() LIMIT ?"
@@ -157,6 +163,7 @@ def search_products_with_discounts(
         max_price: Optional[float] = None,
         colors: Optional[List[str]] = None,
         description: Optional[str] = None,
+        category: Optional[str] = None,
         limit: int = 20
     ) -> str:
     """
@@ -167,6 +174,7 @@ def search_products_with_discounts(
     - max_price (float, optional): Maximum price of the product.
     - colors (list of str, optional): List of colors to search for.
     - description (str, optional): Description text to search for.
+    - category (str, optional): Category of the product (low, mid, high, basketball, slides).
     - limit (int, optional): Limit of how many results we should return.
 
     Returns:
@@ -190,6 +198,10 @@ def search_products_with_discounts(
     if description:
         query += " AND description LIKE ?"
         params.append(f"%{description.lower()}%")
+        
+    if category and category in ["low", "mid", "high", "basketball", "slides"]:
+        query += " AND type = ?"
+        params.append(category)
         
     # Add some randomness to the fetched results and add a limit
     query += " ORDER BY RANDOM() LIMIT ?"
@@ -219,6 +231,7 @@ def search_new_releases(
         max_price: Optional[float] = None,
         colors: Optional[List[str]] = None,
         description: Optional[str] = None,
+        category: Optional[str] = None,
         limit: int = 20  
     ) -> str:
     """
@@ -229,6 +242,7 @@ def search_new_releases(
     - max_price (float, optional): Maximum price of the product.
     - colors (list of str, optional): List of colors to search for.
     - description (str, optional): Description text to search for.
+    - category (str, optional): Category of the product (low, mid, high, basketball, slides).
     - limit (int, optional): Limit of how many results we should return.
 
     Returns:
@@ -252,6 +266,10 @@ def search_new_releases(
     if description:
         query += " AND description LIKE ?"
         params.append(f"%{description.lower()}%")
+        
+    if category and category in ["low", "mid", "high", "basketball", "slides"]:
+        query += " AND type = ?"
+        params.append(category)
         
     # Add some randomness to the fetched results and add a limit
     query += " ORDER BY RANDOM() LIMIT ?"
@@ -297,7 +315,7 @@ def insert_product_type(product_id, product_type):
     
     Args:
     - product_id (str): ID of the product.
-    - product_type (str): Type of the product (e.g., 'low', 'mid', 'high').
+    - product_type (str): Type of the product (e.g., 'low', 'mid', 'high', 'basketball', 'slides').
     """
     with get_connection() as conn:
         cur = conn.cursor()

@@ -15,6 +15,7 @@ def run_image_processing():
     """
     Uses shoes names to match them into types, if the name does not mention the shoe type we use gpt vision.
     """
+    # Fetch all the products and their images
     products = get_product_details()
 
     for product in products:

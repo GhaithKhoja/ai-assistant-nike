@@ -9,6 +9,7 @@
     ├── db
     │   ├── backup
     │   │   └── database.db
+    |   │   └── initial_fetch.db
     │   ├── database.db
     │   └── database.py
     ├── image_processing.py

@@ -155,6 +155,11 @@ class Assistant:
                             "description": {
                                 "type": "string",
                                 "description": "Description of the product to search for"
+                            },
+                            "category": {
+                                "type": "string",
+                                "enum": ["low", "mid", "high", "basketball", "slides"],
+                                "description": "Category of the product (low, mid, high, basketball, slides)"
                             }
                         },
                         "required": []
@@ -184,6 +189,11 @@ class Assistant:
                             "description": {
                                 "type": "string",
                                 "description": "Description of the product to search for"
+                            },
+                            "category": {
+                                "type": "string",
+                                "enum": ["low", "mid", "high", "basketball", "slides"],
+                                "description": "Category of the product (low, mid, high, basketball, slides)"
                             }
                         },
                         "required": []
@@ -213,6 +223,11 @@ class Assistant:
                             "description": {
                                 "type": "string",
                                 "description": "Description of the product to search for"
+                            },
+                            "category": {
+                                "type": "string",
+                                "enum": ["low", "mid", "high", "basketball", "slides"],
+                                "description": "Category of the product (low, mid, high, basketball, slides)"
                             }
                         },
                         "required": []
@@ -277,68 +292,50 @@ class Assistant:
                 function_name = tool_call.function.name
                 function_args = json.loads(tool_call.function.arguments)
                 
+                # Parse name if it exists
+                name = function_args.get('name')
+                
+                # Parse description if it exists
+                description = function_args.get('description')
+                
+                # Parse max_price if it exists
+                max_price = function_args.get('max_price')
+                
+                # Parse colors if it exists
+                colors = function_args.get('colors')
+                
+                # Parse category if it exists
+                category = function_args.get('category')
+                
                 # define returned results
                 results = []
                 
                 # Call the correct function
                 if function_name == 'search_products':
-                    # Parse name if it exists
-                    name = function_args.get('name')
-                    
-                    # Parse description if it exists
-                    description = function_args.get('description')
-                    
-                    # Parse max_price if it exists
-                    max_price = function_args.get('max_price')
-                    
-                    # Parse colors if it exists
-                    colors = function_args.get('colors')
-                        
                     results = search_products(
                         name=name,
                         max_price=max_price,
                         colors=colors,
                         description=description,
+                        category=category,
                         limit=self.limit
                     )
-                elif function_name == "search_products_with_discounts":
-                    # Parse name if it exists
-                    name = function_args.get('name')
-                    
-                    # Parse description if it exists
-                    description = function_args.get('description')
-                    
-                    # Parse max_price if it exists
-                    max_price = function_args.get('max_price')
-                    
-                    # Parse colors if it exists
-                    colors = function_args.get('colors')
-                        
+                elif function_name == "search_products_with_discounts":   
                     results = search_products_with_discounts(
                         name=name,
                         max_price=max_price,
                         colors=colors,
                         description=description,
+                        category=category,
                         limit=self.limit
                     )
-                elif function_name == "search_new_releases":
-                    # Parse name if it exists
-                    name = function_args.get('name')
-                    
-                    # Parse description if it exists
-                    description = function_args.get('description')
-                    
-                    # Parse max_price if it exists
-                    max_price = function_args.get('max_price')
-                    
-                    # Parse colors if it exists
-                    colors = function_args.get('colors')
-                        
+                elif function_name == "search_new_releases": 
                     results = search_new_releases(
                         name=name,
                         max_price=max_price,
                         colors=colors,
                         description=description,
+                        category=category,
                         limit=self.limit
                     )
                     
