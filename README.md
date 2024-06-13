@@ -57,10 +57,13 @@ This command will create a new `conda` environment named `myenv` and install the
 
 #### Step 3: Activate the Conda Environment and Install Additional Dependencies
 
+#### Setup video
+https://www.loom.com/share/2d70e6b3229343b991c9955b0cea6b30?sid=5b1a7845-aee8-4629-be9a-c65e31222e5e
+
 1. Activate the newly created conda environment:
 
     ```sh
-    conda activate myenv
+    conda activate nike-ai-assistant-env
     ```
 
 2. Install the additional dependencies using `pip`:
