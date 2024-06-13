@@ -3,6 +3,7 @@
 ### File Structure
 ```
 ├── README.md
+├── requirements.txt
 ├── assistant.py
 ├── main.py
 └── scraper
